@@ -16,8 +16,15 @@ class FaceContourDetectionProcessor(private val view: GraphicOverlay) :
 
     private val realTimeOpts = FaceDetectorOptions.Builder()
         .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
-        .setContourMode(FaceDetectorOptions.CONTOUR_MODE_NONE)
+        .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
         .build()
+
+//    val realTimeOpts = FaceDetectorOptions.Builder()
+//        .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+//        .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
+//        .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
+//        .build()
+
 
     private val detector = FaceDetection.getClient(realTimeOpts)
 
@@ -41,6 +48,7 @@ class FaceContourDetectionProcessor(private val view: GraphicOverlay) :
         graphicOverlay: GraphicOverlay,
         rect: Rect
     ) {
+        Log.d("=======>","take result:"+results.size);
         graphicOverlay.clear()
         results.forEach {
             val faceGraphic = FaceContourGraphic(graphicOverlay, it, rect)
@@ -50,7 +58,7 @@ class FaceContourDetectionProcessor(private val view: GraphicOverlay) :
     }
 
     override fun onFailure(e: Exception) {
-        Log.w(TAG, "Face Detector failed.$e")
+        Log.e(TAG, "======>Face Detector failed  $e")
     }
 
     companion object {
